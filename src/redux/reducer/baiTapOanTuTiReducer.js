@@ -5,9 +5,9 @@ const stateDefault = {
         {ma:'bao',hinhAnh:'./img/gameOanTuTi/bao.png',datCuoc:false}
     ],
 
-    ketQuaOanTuTi : "I love you 3000 !!!",
+    ketQuaOanTuTi : "Game Oắn Tù Xì",
     soBanThang:0,
-    soBanThua:0,
+    soBanChoi:0,
     computer: {ma:'keo',hinhAnh:'./img/gameOanTuTi/bao.png'}
 }
 
@@ -44,7 +44,44 @@ const baiTapOanTuTiReDucer = (state = stateDefault,action) => {
             return {...state};
         }
         
-
+        case 'END_GAME':
+            state.soBanChoi +=1;
+            let player = state.mangDatCuoc.find(item => item.datCuoc === true);
+            let computer = state.computer;
+            switch (player.ma) {
+                case 'keo' :
+                    if(computer.ma === 'keo') {
+                        state.ketQuaOanTuTi = 'Hòa nhau !!!'
+                    }else if (computer.ma === 'bua') {
+                        state.ketQuaOanTuTi = 'Thua rồi !!!'
+                    }else if (computer.ma === 'bao'){
+                        state.ketQuaOanTuTi = 'Thắng rồi hay lắm !!!'
+                        state.soBanThang +=1;
+                    }
+                ;break;  
+                case 'bua' :
+                    if(computer.ma === 'keo') {
+                        state.ketQuaOanTuTi = 'Thắng rồi hay lắm !!!'
+                        state.soBanThang +=1;
+                    }else if (computer.ma === 'bua') {
+                        state.ketQuaOanTuTi = 'Hòa nhau !!!'
+                    }else if (computer.ma === 'bao'){
+                        state.ketQuaOanTuTi = 'Thua rồi !!!'
+                    }
+                ;break;
+                case 'bao' :
+                    if(computer.ma === 'keo') {
+                        state.ketQuaOanTuTi = 'Thua ròi !!!'
+                    }else if (computer.ma === 'bua') {
+                        state.ketQuaOanTuTi = 'Thắng rồi hay lắm !!!'
+                        state.soBanThang +=1;
+                    }else if (computer.ma === 'bao'){
+                        state.ketQuaOanTuTi = 'Hòa nhau !!!'
+                    }
+                ;break;
+                default: state.ketQuaOanTuTi = "Ironman 3000"
+                }
+            return {...state};
         default: return {...state}
     }
 }

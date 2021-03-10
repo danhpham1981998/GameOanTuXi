@@ -34,9 +34,24 @@ class BaiTapOanTuTi extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     playGame: () => {
-        dispatch ({
-            type: 'RAN_DOM'
-        })
+
+        let count = 0;
+        //Khai báo hàm lập đi lập lại
+        let randomComputerItem = setInterval(() => {
+            dispatch ({
+                type: 'RAN_DOM'
+            })
+            count ++;
+            if(count > 10) {
+                //Dừng hàm setInterval
+                clearInterval(randomComputerItem)
+
+                dispatch({
+                    type: 'END_GAME'
+                })
+
+            }
+        },100)
     }
 })
 
